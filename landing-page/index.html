@@ -1,0 +1,107 @@
+
+%%[
+if not empty(RequestParameter("post")) then
+var @result
+if RequestParameter("action") == "Encrypt" then
+  if RequestParameter("method") == "DES" then
+    set @result =  EncryptSymmetric(RequestParameter("value"), "des;mode=ecb;padding=zeros", @null, "YEP!s8E4", @null, @null, @null, @null) 
+  else
+
+  endif
+else
+  if RequestParameter("method") == "DES" then
+  set @result =  DecryptSymmetric(RequestParameter("value"), "des;mode=ecb;padding=zeros", @null, "YEP!s8E4", @null, @null, @null, @null) 
+
+  else
+  endif
+endif
+endif
+]%%
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Encrypt and Decrypt with AMPScript</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+   
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-6">
+        <h2>Encrypt and Decrypt with AMPScript</h2>
+        %%[if not empty(@result) then]%%
+        <div class="alert alert-success">
+          Your result is: <strong>%%=v(@result)=%%</strong>
+        </div>
+        %%[endif]%%
+        <form role="form" method="POST" action="%%=RequestParameter('PAGEURL')=%%">
+  <div class="form-group">
+    <label for="action">Action</label>
+    <select id="action" name="action"  class="form-control">
+      <option>Encrypt</option>
+      <option>Decrypt</option>
+    </select>
+  </div>
+  <div class="form-group" style="display:none;">
+    <label for="method">Method</label>
+    <select id="method" name="method"  class="form-control">
+      <option>DES</option>
+      <option>TripleDES</option>
+    </select>
+  </div>
+  <div class="form-group" >
+    <label for="value">Value to Encrypt or Decrypt</label>
+    <input type="text" id="value" name="value"  class="form-control"/>
+  </div>
+  <input type="hidden" id="post" name="post" value="post"/>
+  <button type="submit" class="btn btn-primary">Submit!</button>
+</form>
+</div>
+<div class="col-md-6" style="padding-top:40px">
+  <div class="alert alert-info">
+    <h4>Notes:</h4>
+    <p>DES encryption and Decryption using the following AMPScript code:</p>
+    <p><strong>Encrypt:</strong></p>
+    <pre>EncryptSymmetric(RequestParameter("value"), "des;mode=ecb;padding=zeros", @null, "YEP!s8E4", @null, @null, @null, @null) </pre>
+    <p><strong>Decrypt:</strong></p>
+    <pre>DecryptSymmetric(RequestParameter("value"), "des;mode=ecb;padding=zeros", @null, "YEP!s8E4", @null, @null, @null, @null) </pre>
+
+    <p><small>Created by pato sapir for <a href="http://adventureswithet.com" target="_blank">http://adventureswithet.com</a></small></p>
+  </div>
+</div>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
